@@ -1,0 +1,6 @@
+parameters:
+#    t_fox_calendar.example.class: TFox\CalendarBundle\Example
+
+services:
+  tfox.calendar.widget:
+    class: TFox\CalendarBundle\Service\WidgetService
