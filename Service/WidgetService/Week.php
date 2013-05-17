@@ -81,4 +81,16 @@ class Week {
 	{
 		return $this->getLastDay()->getDate();
 	}
+	
+	public function getFullName()
+	{
+		$fullNames = $this->calendar->getWeekFullNames();
+		return $fullNames[$this->getNumber() - 1];
+	}
+	
+	public function getShortName()
+	{
+		$shortNames = $this->calendar->getWeekShortNames();
+		return $shortNames[$this->getNumber() - 1];
+	}
 }

@@ -78,4 +78,16 @@ class Month {
 	
 		return $weeks;
 	}
+	
+	public function getFullName()
+	{
+		$fullNames = $this->calendar->getMonthFullNames();
+		return $fullNames[$this->getNumber() - 1];
+	}
+	
+	public function getShortName()
+	{
+		$shortNames = $this->calendar->getMonthShortNames();
+		return $shortNames[$this->getNumber() - 1];
+	}
 }

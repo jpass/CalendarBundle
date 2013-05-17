@@ -7,11 +7,38 @@ namespace TFox\CalendarBundle\Service\WidgetService;
  *
  */
 class Calendar {
+	/**
+	 * Year for calendar
+	 * @var int
+	 */
 	private $year;
-	
+		
+	/**
+	 * Array with instances of Month objects
+	 * @var array
+	 */	
 	private $months;
+	
+	/**
+	 * Array with instances of Week objects
+	 * @var array
+	 */
 	private $weeks;
+	
+	/**
+	 * Array with instances of Day objects
+	 * @var array
+	 */
 	private $days;
+	
+	private $monthShortNames;
+	
+	private $monthFullNames;
+	
+	private $weekShortNames;
+	
+	private $weekFullNames;
+	
 	
 	public function __construct($year)
 	{
@@ -79,6 +106,27 @@ class Calendar {
 		}		
 		$this->addWeek($currentWeek);
 
+		$this->initNames();
+	}
+	
+	private function initNames()
+	{
+		$this->monthFullNames = array(
+			'January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'
+		);
+		$this->monthShortNames = array(
+			'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+			'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+		);
+		$this->weekFullNames = array(
+			'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+		);
+		$this->weekShortNames = array(
+			'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'
+		);
+		
+		
 	}
 	
 	public function addMonth($month)
@@ -134,5 +182,45 @@ class Calendar {
 	public function getLastDate()
 	{
 		return $this->getLastDay()->getDate();
+	}
+	
+	public function getMonthFullNames()
+	{
+		return $this->monthFullNames;
+	}
+	
+	public function getMonthShortNames()
+	{
+		return $this->monthShortNames;
+	}
+	
+	public function getWeekFullNames()
+	{
+		return $this->weekFullNames;
+	}
+	
+	public function getWeekShortNames()
+	{
+		return $this->weekShortNames;
+	}
+
+	public function setMonthFullNames($arg)
+	{
+		$this->monthFullNames = $arg;
+	}
+	
+	public function setMonthShortNames($arg)
+	{
+		$this->monthShortNames = $arg;
+	}
+	
+	public function setWeekFullNames($arg)
+	{
+		$this->weekFullNames = $arg;
+	}
+	
+	public function setWeekShortNames($arg)
+	{
+		$this->weekShortNames = $arg;
 	}
 }
