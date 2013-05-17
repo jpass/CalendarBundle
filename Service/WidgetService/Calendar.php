@@ -68,10 +68,10 @@ class Calendar {
 			
 			//Add a day to week
 			if(is_null($currentWeek)) {
-				$currentWeek = new Week($weekNumber);
+				$currentWeek = new Week($this);
 			} else if($currentWeek->getNumber() != $weekNumber) {
 				$this->addWeek($currentWeek);
-				$currentWeek = new Week($weekNumber);
+				$currentWeek = new Week($this);
 			}
 			$currentWeek->addDay($day);
 			

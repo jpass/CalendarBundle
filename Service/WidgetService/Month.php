@@ -1,20 +1,20 @@
 <?php
 namespace TFox\CalendarBundle\Service\WidgetService;
 class Month {
-	private $number;
+	private $calendar;
 	private $days;
-	private $year;
 	
-	public function __construct($number, $year)
+	public function __construct($calendar)
 	{
-		$this->number = $number;
-		$this->year = $year;
+		$this->calendar = $calendar;
 		$this->days = array();
 	}
 	
 	public function getNumber()
 	{
-		return $this->number;
+		$firstDay = $this->days[0];
+		$firstDate = $firstDay->getDate();
+		return (int)$firstDate->format('n');
 	}
 	
 	public function addDay($day)
@@ -29,7 +29,36 @@ class Month {
 	
 	public function getYear()
 	{
-		return $this->year;
+		$firstDay = $this->days[0];
+		$firstDate = $firstDay->getDate();
+		return (int)$firstDate->format('Y');
 	}
 	
+	public function getDay($index)
+	{
+		if(isset($this->days[$index]))
+			return $this->days[$index];
+		else
+			return null;
+	}
+	
+	public function getFirstDay()
+	{
+		return $this->days[0];
+	}
+	
+	public function getFirstDate()
+	{
+		return $this->getFirstDay()->getDate();
+	}
+	
+	public function getLastDay()
+	{
+		return $this->days[count($this->days) - 1];
+	}
+	
+	public function getLastDate()
+	{
+		return $this->getLastDay()->getDate();
+	}
 }

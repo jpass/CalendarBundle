@@ -1,18 +1,20 @@
 <?php
 namespace TFox\CalendarBundle\Service\WidgetService;
 class Week {
-	private $number;
+	private $calendar;
 	private $days;
 	
-	public function __construct($number)
+	public function __construct($calendar)
 	{
-		$this->number = $number;
+		$this->calendar = $calendar;
 		$this->days = array();
 	}
 	
 	public function getNumber()
 	{
-		return $this->number;
+		$lastDay = $this->days[count($this->days) - 1];
+		$lastDate = $lastDay->getDate();
+		return (int)$lastDate->format('W');
 	}
 	
 	public function addDay($day)
@@ -25,38 +27,58 @@ class Week {
 		return $this->days;
 	}
 	
+	public function getYear()
+	{
+		$firstDay = $this->days[count($this->days) - 1];
+		$firstDate = $firstDay->getDate();
+		return (int)$firstDate->format('Y');
+	}
+	
+	public function getMonths()
+	{		
+		$_this = $this;
+		$months = array_filter($this->calendar->getMonths(), function($month) use($_this) {
+			if(($_this->getFirstDate() < $month->getFirstDate()
+					&& $_this->getLastDate() < $month->getFirstDate())
+					||($_this->getFirstDate() > $month->getLastDate()
+							&& $_this->getLastDate() > $month->getLastDate())) {
+				return false;
+			} else {
+				return true;
+			}
+		});
+		
+		return $months;
+	}
+	
 	public function isInMonth($month)
 	{
-		foreach($month->getDays() as $day) {
-			foreach($this->getDays() as $day2) {
-				if($day->getDate() == $day2->getDate()) {
-					return true;
-				}
-			}
+		$months = $this->getMonths();
+		foreach($months as $monthIterator) {
+			if($monthIterator->getNumber() == $month->getNumber()
+					&& $monthIterator->getYear() == $month->getYear())
+				return true;
 		}
 		return false;
-		/*
-		if(!count($this->days))
-			return false;
-		
-		$firstDay = $this->days[0];
-		$lastDay = $this->days[(count($this->days) - 1)];
-		$firstDate = $firstDay->getDate();
-		$lastDate = $lastDay->getDate();
-		
-		if($month->getNumber() < 12) {
-			return (($firstDate->format('n') == $month->getNumber())
-					&& $lastDate->format('Y') == $month->getYear())
-					|| (($lastDate->format('n') == $month->getNumber())
-							&& $lastDate->format('Y') == $month->getYear()
-					);
-		} else {echo $firstDate->format('W');
-			return ((($firstDate->format('n') == $month->getNumber())
-					&& $lastDate->format('Y') == $month->getYear())
-					|| (($lastDate->format('n') == $month->getNumber())
-							&& $lastDate->format('Y') == $month->getYear()
-					) && (int)$firstDate->format('W') > 6);
-		}
-*/
+	}
+	
+	public function getFirstDay()
+	{
+		return $this->days[0];
+	}
+	
+	public function getFirstDate()
+	{
+		return $this->getFirstDay()->getDate();
+	}
+	
+	public function getLastDay()
+	{
+		return $this->days[count($this->days) - 1];
+	}
+	
+	public function getLastDate()
+	{
+		return $this->getLastDay()->getDate();
 	}
 }
