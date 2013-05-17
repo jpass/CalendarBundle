@@ -2,7 +2,7 @@
 namespace TFox\CalendarBundle\Service\WidgetService;
 
 class Day {
-	private $date;
+	protected $date;
 	
 	public function __construct(\DateTime $date)
 	{

@@ -7,40 +7,48 @@ namespace TFox\CalendarBundle\Service\WidgetService;
  *
  */
 class Calendar {
+	const DEFAULT_MONTH_MODEL = '\TFox\CalendarBundle\Service\WidgetService\Month';
+	const DEFAULT_WEEK_MODEL = '\TFox\CalendarBundle\Service\WidgetService\Week';
+	const DEFAULT_DAY_MODEL = '\TFox\CalendarBundle\Service\WidgetService\Day';
+	
+	protected $monthModel = self::DEFAULT_MONTH_MODEL;
+	protected $weekModel = self::DEFAULT_WEEK_MODEL;
+	protected $dayModel = self::DEFAULT_DAY_MODEL;
+	
 	/**
 	 * Year for calendar
 	 * @var int
 	 */
-	private $year;
+	protected $year;
 		
 	/**
 	 * Array with instances of Month objects
 	 * @var array
 	 */	
-	private $months;
+	protected $months;
 	
 	/**
 	 * Array with instances of Week objects
 	 * @var array
 	 */
-	private $weeks;
+	protected $weeks;
 	
 	/**
 	 * Array with instances of Day objects
 	 * @var array
 	 */
-	private $days;
+	protected $days;
 	
-	private $monthShortNames;
+	protected $monthShortNames;
 	
-	private $monthFullNames;
+	protected $monthFullNames;
 	
-	private $weekShortNames;
+	protected $weekShortNames;
 	
-	private $weekFullNames;
+	protected $weekFullNames;
 	
 	
-	public function __construct($year)
+	public function generate($year)
 	{
 		$this->year = $year;
 		$this->months = array();
@@ -72,7 +80,7 @@ class Calendar {
 		$currentMonth = null;
 		while($dateIterator <= $lastDate) {
 			$currentDate = clone $dateIterator;
-			$day = new Day($currentDate);
+			$day = new $this->dayModel($currentDate);
 			$this->addDay($day);
 			
 			//Calculate month and week numbers
@@ -84,10 +92,10 @@ class Calendar {
 					
 				//Add a day to month
 				if(is_null($currentMonth)) {
-					$currentMonth = new Month($this);
+					$currentMonth = new $this->monthModel($this);
 				} else if($currentMonth->getNumber() != $monthNumber) {
 					$this->addMonth($currentMonth);
-					$currentMonth = new Month($this);
+					$currentMonth = new $this->monthModel($this);
 				}
 				$currentMonth->addDay($day);
 			}
@@ -95,10 +103,10 @@ class Calendar {
 			
 			//Add a day to week
 			if(is_null($currentWeek)) {
-				$currentWeek = new Week($this);
+				$currentWeek = new $this->weekModel($this);
 			} else if($currentWeek->getNumber() != $weekNumber) {
 				$this->addWeek($currentWeek);
-				$currentWeek = new Week($this);
+				$currentWeek = new $this->weekModel($this);
 			}
 			$currentWeek->addDay($day);
 			
@@ -222,5 +230,20 @@ class Calendar {
 	public function setWeekShortNames($arg)
 	{
 		$this->weekShortNames = $arg;
+	}
+	
+	public function setModels($monthModel, $weekModel, $dayModel)
+	{
+		$this->monthModel = is_null($monthModel) ? self::DEFAULT_MONTH_MODEL : $monthModel;
+		if(!class_exists($this->monthModel))
+			throw new \Exception(sprintf('Class %s not found.', $this->monthModel));
+		
+		$this->weekModel = is_null($weekModel) ? self::DEFAULT_WEEK_MODEL : $weekModell;
+		if(!class_exists($this->weekModel))
+			throw new \Exception(sprintf('Class %s not found.', $this->weekModel));
+		
+		$this->dayModel = is_null($dayModel) ? self::DEFAULT_DAY_MODEL : $dayModel;
+		if(!class_exists($this->dayModel))
+			throw new \Exception(sprintf('Class %s not found.', $this->dayModel));
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 namespace TFox\CalendarBundle\Service\WidgetService;
 class Month {
-	private $calendar;
-	private $days;
+	protected $calendar;
+	protected $days;
 	
 	public function __construct($calendar)
 	{
