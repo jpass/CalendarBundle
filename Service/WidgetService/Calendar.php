@@ -57,10 +57,10 @@ class Calendar {
 					
 				//Add a day to month
 				if(is_null($currentMonth)) {
-					$currentMonth = new Month($monthNumber, $monthYear);
+					$currentMonth = new Month($this);
 				} else if($currentMonth->getNumber() != $monthNumber) {
 					$this->addMonth($currentMonth);
-					$currentMonth = new Month($monthNumber, $monthYear);
+					$currentMonth = new Month($this);
 				}
 				$currentMonth->addDay($day);
 			}
@@ -114,5 +114,25 @@ class Calendar {
 	public function getYear()
 	{
 		return $this->year;
+	}
+	
+	public function getFirstDay()
+	{
+		return $this->days[0];
+	}
+	
+	public function getFirstDate()
+	{
+		return $this->getFirstDay()->getDate();
+	}
+	
+	public function getLastDay()
+	{
+		return $this->days[count($this->days) - 1];
+	}
+	
+	public function getLastDate()
+	{
+		return $this->getLastDay()->getDate();
 	}
 }

@@ -61,4 +61,21 @@ class Month {
 	{
 		return $this->getLastDay()->getDate();
 	}
+	
+	public function getWeeks()
+	{
+		$_this = $this;
+		$weeks = array_filter($this->calendar->getWeeks(), function($week) use($_this) {
+			if(($week->getFirstDate() < $_this->getFirstDate()
+					&& $week->getLastDate() < $_this->getFirstDate())
+					||($week->getFirstDate() > $_this->getLastDate()
+							&& $week->getLastDate() > $_this->getLastDate())) {
+				return false;
+			} else {
+				return true;
+			}
+		});
+	
+		return $weeks;
+	}
 }
