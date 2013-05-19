@@ -96,7 +96,6 @@ class Day extends \TFox\CalendarBundle\Service\WidgetService\Day {
 
 
 //src/TFox/TestBundle/Calendar/Month.php
-//src/TFox/TestBundle/Resources/views/Calendar/Default/index.html.twig
 
 namespace TFox\TestBundle\Calendar;
 
@@ -111,6 +110,7 @@ class Month extends \TFox\CalendarBundle\Service\WidgetService\Month
 
 
 //And finally twig
+//src/TFox/TestBundle/Resources/views/Calendar/Default/index.html.twig
 
 <html>
 <head>
