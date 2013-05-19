@@ -4,8 +4,11 @@ class Month {
 	protected $calendar;
 	protected $days;
 	
+	protected $parameters;
+	
 	public function __construct($calendar)
 	{
+		$this->parameters = array();
 		$this->calendar = $calendar;
 		$this->days = array();
 	}
@@ -89,5 +92,15 @@ class Month {
 	{
 		$shortNames = $this->calendar->getMonthShortNames();
 		return $shortNames[$this->getNumber() - 1];
+	}
+	
+	public function setParameter($key, $value)
+	{
+		$this->parameters[$key] = $value;
+	}
+	
+	public function getParameter($key)
+	{
+		return key_exists($key, $this->parameters) ? $this->parameters[$key] : null;
 	}
 }

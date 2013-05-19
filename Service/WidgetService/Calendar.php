@@ -47,6 +47,7 @@ class Calendar {
 	
 	protected $weekFullNames;
 	
+	protected $parameters;
 	
 	public function generate($year)
 	{
@@ -54,6 +55,7 @@ class Calendar {
 		$this->months = array();
 		$this->weeks = array();
 		$this->days = array();
+		$this->parameters = array();
 		$oneDayInterval = new \DateInterval('P1D');
 		
 		//Calculate first and last days of year
@@ -246,4 +248,29 @@ class Calendar {
 		if(!class_exists($this->dayModel))
 			throw new \Exception(sprintf('Class %s not found.', $this->dayModel));
 	}
+	
+	public function getDay($param)
+	{
+		if(is_int($param)) {
+			return key_exists($param, $this->days) ? $this->days[$param] : null;
+		} elseif(is_string($param)) {
+			foreach($this->days as $day) {
+				$date = $day->getDate()->format('d.m');
+				if($date == $param)
+					return $day;
+			}
+			return null;
+		}
+	}
+	
+	public function setParameter($key, $value)
+	{
+		$this->parameters[$key] = $value;
+	}
+	
+	public function getParameter($key)
+	{
+		return key_exists($key, $this->parameters) ? $this->parameters[$key] : null;
+	}
+	
 }

@@ -4,8 +4,11 @@ namespace TFox\CalendarBundle\Service\WidgetService;
 class Day {
 	protected $date;
 	
+	protected $parameters;
+	
 	public function __construct(\DateTime $date)
 	{
+		$this->parameters = array();
 		$this->date = $date;
 	}
 	
@@ -43,5 +46,15 @@ class Day {
 	public function isInYear($year)
 	{
 		return $this->date->format('Y') == $year;
+	}
+	
+	public function setParameter($key, $value)
+	{
+		$this->parameters[$key] = $value;
+	}
+	
+	public function getParameter($key)
+	{
+		return key_exists($key, $this->parameters) ? $this->parameters[$key] : null;
 	}
 }
