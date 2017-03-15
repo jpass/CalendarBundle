@@ -26,7 +26,7 @@
         "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
-        "psr-0": { "Jpass\\CalendarBundle": "" }
+        "psr-4": { "TFox\\CalendarBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
