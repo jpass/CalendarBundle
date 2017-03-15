@@ -1,18 +1,22 @@
 {
-    "name": "tfox/calendar-bundle",
+    "name": "jpass/calendar-bundle",
     "type": "symfony-bundle",
     "description": "This bundle allows to render calendars using Twig engine. Additional parameters might be added for each day, month and week.",
     "keywords": ["symfony", "twig", "calendar"],
-    "homepage": "https://github.com/tasmanianfox/CalendarBundle",
+    "homepage": "https://github.com/jpass/CalendarBundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Sergei Beljakov",
             "email": "sergei.beljakov@tfox.eu"
+        },
+        {
+            "name": "Michal Suchomski",
+            "github": "https://github.com/jpass"
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.1"
+        "symfony/framework-bundle": ">=2.1"
     },
     "require-dev": {
         "symfony/class-loader": "*",
@@ -22,9 +26,9 @@
         "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
-        "psr-0": { "TFox\\CalendarBundle": "" }
+        "psr-0": { "Jpass\\CalendarBundle": "" }
     },
-    "target-dir": "TFox/CalendarBundle",
+    "target-dir": "Jpass/CalendarBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
