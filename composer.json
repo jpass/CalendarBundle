@@ -28,7 +28,6 @@
     "autoload": {
         "psr-0": { "Jpass\\CalendarBundle": "" }
     },
-    "target-dir": "Jpass/CalendarBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
