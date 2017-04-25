@@ -16,7 +16,8 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.1|~3.0"
+        "symfony/framework-bundle": "~2.1|~3.0",
+        "nesbot/carbon": "^1.22"
     },
     "require-dev": {
         "symfony/class-loader": "*",
