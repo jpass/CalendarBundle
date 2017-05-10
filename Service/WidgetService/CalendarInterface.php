@@ -28,6 +28,13 @@ interface CalendarInterface
     public function generateWeek($week);
 
     /**
+     * @param integer $week
+     *
+     * @return CalendarInterface
+     */
+    public function generateMonth($week);
+
+    /**
      * @return array
      */
     public function getDays();

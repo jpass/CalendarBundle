@@ -49,6 +49,21 @@ class WidgetService
         return $calendar;
     }
 
+    /**
+     * @param $month
+     *
+     * @return CalendarInterface
+     */
+    public function generateMonthCalendar($month)
+    {
+        /** @var CalendarInterface $calendar */
+        $calendar = new $this->calendarModel();
+        $calendar->setModels($this->monthModel, $this->weekModel, $this->dayModel);
+        $calendar->generateMonth($month);
+
+        return $calendar;
+    }
+
     public function setModels($calendarModel, $monthModel, $weekModel, $dayModel)
     {
         $this->calendarModel = is_null($calendarModel) ? self::DEFAULT_CALENDAR_MODEL : $calendarModel;

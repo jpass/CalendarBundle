@@ -165,6 +165,35 @@ class Calendar implements CalendarInterface
         }
     }
 
+    public function generateMonth($date)
+    {
+        if(!$date instanceof Carbon)
+        {
+            $date = Carbon::parse($date);
+        }
+        $firstOfMonth = $date->copy()->startOfMonth();
+        $firstOfWeekOfMonth = $date->copy()->startOfMonth()->startOfWeek();
+
+        $lastDayOfMonth = $date->copy()->lastOfMonth();
+        $lastDayOfWeekOfMonth = $date->copy()->lastOfMonth()->endOfWeek();
+
+        $month = new $this->monthModel($firstOfMonth);
+
+        $dateIterator = $firstOfWeekOfMonth->copy();
+        while ($dateIterator->lte($lastDayOfWeekOfMonth))
+        {
+            $currentDate = $dateIterator->copy();
+            $day = new $this->dayModel($currentDate);
+            if($currentDate->gte($firstOfMonth) && $currentDate->lte($lastDayOfMonth))
+            {
+                $month->addDay($day);
+            }
+            $this->addDay($day);
+            $dateIterator->addDay();
+        }
+        $this->addMonth($month);
+    }
+
     private function initNames()
     {
         $this->monthFullNames = array(
